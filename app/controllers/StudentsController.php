@@ -14,14 +14,28 @@ class StudentsController extends Controller
         $this->call->model('StudentsModel');
     }
 
-    function selectFunction($ulrParam)
+    function selectFunction($urlParam, $urlParamId)
     {
-        switch ($ulrParam) {
+        if (is_numeric($urlParamId)) {
+            echo "<script>alert('" . htmlspecialchars("Current Id: $urlParamId", ENT_QUOTES) . "');</script>";
+        } else {
+            echo "<script>alert('Invalid ID: " . $urlParamId . "\\nID set to 0');</script>";
+        }
+
+        switch ($urlParam) {
             case 'read':
                 $this->get_all();
                 break;
             case 'write':
                 $this->create();
+                break;
+            case 'update':
+                $this->updateTable($urlParamId);
+                break;
+            case 'delete':
+                $this->delete($urlParamId);
+            case 'restore':
+                $this->restore($urlParamId);
                 break;
         }
     }
@@ -29,22 +43,39 @@ class StudentsController extends Controller
     function get_all()
     {
         echo "<pre>";
-        var_dump($this->StudentsModel->readDb());
+        var_dump($this->StudentsModel->all(true));
         echo "</pre>";
     }
 
     function create()
     {
-        $this->StudentsModel->insertIntoDb();
+        $this->StudentsModel->insert([
+            'last_name' => 'insert_firstname',
+            'first_name' => 'insert_lastname',
+            'email' => 'test@example.com'
+        ]);
+        echo "<script>alert('New record added');</script>";
     }
 
-    function update()
+    function updateTable($urlParamId)
     {
-        $this->call->view('welcome_page');
+        $this->StudentsModel->update($urlParamId, [
+            'last_name' => 'update_firstname',
+            'first_name' => 'update_lastname',
+            'email' => 'test@example.com'
+        ]);
+        echo "<script>alert('Record updated at $urlParamId');</script>";
     }
 
-    function delete()
+    function delete($urlParamId)
     {
-        $this->call->view('welcome_page');
+        $this->StudentsModel->soft_delete($urlParamId);
+        echo "<script>alert('Record deleted at $urlParamId');</script>";
+    }
+
+    function restore($urlParamId)
+    {
+        $this->StudentsModel->restore($urlParamId);
+        echo "<script>alert('Record restored at $urlParamId');</script>";
     }
 }
