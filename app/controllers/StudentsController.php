@@ -29,22 +29,62 @@ class StudentsController extends Controller
             case 'write':
                 $this->create();
                 break;
+            case 'create':
+                $this->create();
+                break;
             case 'update':
                 $this->updateTable($urlParamId);
                 break;
             case 'delete':
                 $this->delete($urlParamId);
+                break;
             case 'restore':
                 $this->restore($urlParamId);
+                break;
+            case 'read_deleted':
+                $this->viewDeleted();
                 break;
         }
     }
 
     function get_all()
     {
-        echo "<pre>";
-        var_dump($this->StudentsModel->all(true));
-        echo "</pre>";
+
+        $data = $this->StudentsModel->all(true);
+    
+        $filteredData = array_filter($data, function ($row) {
+            return empty($row['deleted_at']); 
+        });
+
+        if (!empty($filteredData)) {
+            echo "<table border='1' cellpadding='6' cellspacing='0' style='border-collapse: collapse;'>";
+
+            // Table Headers
+            echo "<thead><tr>";
+            foreach ($filteredData[0] as $column => $value) {
+                if ($column !== 'deleted_at') {
+                    echo "<th>" . htmlspecialchars($column) . "</th>";
+                }
+            }
+            echo "</tr></thead>";
+
+            // Table Rows
+            echo "<tbody>";
+            foreach ($filteredData as $row) {
+                echo "<tr>";
+                foreach ($row as $column => $value) {
+                    if ($column !== 'deleted_at') {
+                        echo "<td>" . htmlspecialchars($value) . "</td>";
+                    }
+                }
+                echo "</tr>";
+            }
+            echo "</tbody></table>";
+        } else {
+            echo "<p>No active records found in lava_lust_test.</p>";
+        }
+
+
     }
 
     function create()
@@ -77,5 +117,12 @@ class StudentsController extends Controller
     {
         $this->StudentsModel->restore($urlParamId);
         echo "<script>alert('Record restored at $urlParamId');</script>";
+    }
+
+    function viewDeleted()
+    {
+        echo "<pre>";
+        var_dump($this->StudentsModel->all(true));
+        echo "</pre>";
     }
 }
