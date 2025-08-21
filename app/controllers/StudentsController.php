@@ -9,7 +9,7 @@ class StudentsController extends Controller {
     }
     function get_all() {
             $students = $this->StudentsModel->all();   
-            $this->call->view('students/get_all', ['students' => $students]);
+            $this->call->view('ui/get_all', ['students' => $students]);
         }
      function create() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -19,9 +19,9 @@ class StudentsController extends Controller {
                 'email'      => $_POST['email']
             ];
             $this->StudentsModel->insert($data);
-            redirect('students');
+            redirect('users');
         }
-        $this->call->view('students/create');
+        $this->call->view('ui/create');
     }
     function update($id) {
         $student = $this->StudentsModel->find($id);
@@ -32,12 +32,12 @@ class StudentsController extends Controller {
                 'email'      => $_POST['email']
             ];
             $this->StudentsModel->update($id, $data);
-            redirect('students');
+            redirect('users');
         }
-        $this->call->view('students/update', ['student' => $student]);
+        $this->call->view('ui/update', ['student' => $student]);
     }
     function delete($id) {
          $this->StudentsModel->soft_delete($id);
-         redirect('students');
+         redirect('users');
     }
 }

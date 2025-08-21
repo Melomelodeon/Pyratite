@@ -1,5 +1,5 @@
 <?php
-defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
+defined('PREVENT_DIRECT_ACCESS') or exit('No direct script access allowed');
 /**
  * ------------------------------------------------------------------
  * LavaLust - an opensource lightweight PHP MVC Framework
@@ -44,10 +44,10 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 */
 
 $router->get('/', 'Welcome::index');
-$router->get('/students/get-all', 'StudentsController::get_all');
-$router->get('/students/create', 'StudentsController::create');
-$router->post('/students/create', 'StudentsController::create');
-$router->get('/students', 'StudentsController::get_all');
-$router->get('/students/update/{id}', 'StudentsController::update');
-$router->post('/students/update/{id}', 'StudentsController::update');
-$router->get('/students/delete/{id}', 'StudentsController::delete');
+$router->get('/users', 'StudentsController::get_all');
+$router->get('/users/get-all', 'StudentsController::get_all');
+$router->get('/users/create', 'StudentsController::create');
+$router->post('/users/create', 'StudentsController::create');
+$router->get('/users/update/{id}', 'StudentsController::update');
+$router->post('/users/update/{id}', 'StudentsController::update');
+$router->get('/users/delete/{id}', 'StudentsController::delete');
