@@ -21,13 +21,13 @@ class StudentsModel extends Model
 
     public function count_all_records()
     {
-        $count_sql = "SELECT COUNT(id) as total FROM {$this->table} WHERE {$this->deleted_at} IS NULL";
+        $count_sql = "SELECT COUNT(id) as total FROM {$this->table} WHERE {$this->soft_delete_column} IS NULL";
         $count_result = $this->db->raw($count_sql);
         return $count_result ? $count_result->fetch(PDO::FETCH_ASSOC)['total'] : 0;
     }
     public function get_records_with_pagination($limit_clause)
     {
-        $data_sql = "SELECT * FROM {$this->table} WHERE {$this->deleted_at} IS NULL ORDER BY id DESC {$limit_clause}";
+        $data_sql = "SELECT * FROM {$this->table} WHERE {$this->soft_delete_column} IS NULL ORDER BY id ASC {$limit_clause}";
         $data_result = $this->db->raw($data_sql);
         return $data_result ? $data_result->fetchAll(PDO::FETCH_ASSOC) : [];
     }

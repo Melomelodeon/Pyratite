@@ -8,7 +8,6 @@
   <?php load_css(['css/style']); ?>
   <?php load_css(['css/get_all']); ?>
 </head>
-
 <style>
   .pagination-nav {
     display: flex;
@@ -86,7 +85,6 @@
   }
 </style>
 
-
 <body>
   <div class="main-container">
     <header class="page-header">
@@ -97,7 +95,7 @@
       </a>
 
       <div class="student-count">
-        <?php echo count($users); ?> Registered accounts
+        <?php echo count($records); ?> Registered accounts
       </div>
     </header>
     <div class="data-card">
@@ -112,7 +110,7 @@
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($users as $user): ?>
+          <?php foreach ($records as $user): ?>
             <tr id="student-row-<?= $user['id'] ?>">
               <td data-label="Student ID"><?= htmlspecialchars($user['id']) ?></td>
               <td data-label="First Name"><?= htmlspecialchars($user['first_name']) ?></td>
@@ -134,7 +132,6 @@
         </tbody>
       </table>
     </div>
-
     <!-- Pagination Controls -->
     <?php if (isset($pagination_data)): ?>
       <div class="mt-8">
@@ -149,17 +146,19 @@
           <div class="flex items-center space-x-2">
             <span>Items per page:</span>
             <select id="itemsPerPage" class="px-3 py-1 bg-gray-200 border border-gray-300 rounded-lg text-gray-700">
-              <option value="10" <?php echo ($_GET['per_page'] == 10) ? 'selected' : ''; ?>>10</option>
-              <option value="25" <?php echo ($_GET['per_page'] == 25) ? 'selected' : ''; ?>>25</option>
-              <option value="50" <?php echo ($_GET['per_page'] == 50) ? 'selected' : ''; ?>>50</option>
-              <option value="100" <?php echo ($_GET['per_page'] == 100) ? 'selected' : ''; ?>>100</option>
+
+              <?php $perPage = $_GET['per_page'] ?? 10; ?>
+
+              <option value="10" <?= ($perPage == 10) ? 'selected' : '' ?>>10</option>
+              <option value="25" <?= ($perPage == 25) ? 'selected' : '' ?>>25</option>
+              <option value="50" <?= ($perPage == 50) ? 'selected' : '' ?>>50</option>
+              <option value="100" <?= ($perPage == 100) ? 'selected' : '' ?>>100</option>
+
             </select>
           </div>
         </div>
       </div>
     <?php endif; ?>
-
-
   </div>
 
   <script>
