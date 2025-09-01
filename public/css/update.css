@@ -1,5 +1,3 @@
-/* Update Student Form Specific Styles */
-
 #update-container {
   min-height: 100vh;
   display: flex;
@@ -58,11 +56,12 @@
   font-size: 0.875rem;
   transition: all 0.2s ease;
   box-sizing: border-box;
+  background: var(--bg-tertiary);
 }
 
 .form-group input:focus {
   outline: none;
-  border-color: var(--accent-purple);
+  border-color: var(--accent-one);
   box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
 }
 
@@ -83,7 +82,7 @@
   padding: 0.75rem 1rem;
   font-size: 0.875rem;
   font-weight: 600;
-  background: var(--accent-purple);
+  background: var(--accent-one);
   border: none;
   color: white;
   border-radius: 8px;
@@ -92,7 +91,7 @@
 }
 
 #update-submit-btn:hover {
-  background: var(--accent-purple-dark);
+  background: var(--accent-one-dark);
 }
 
 #back-from-update {

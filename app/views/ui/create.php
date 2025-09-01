@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Add Student</title>
+  <title>Add Account</title>
   <?php load_css(['css/style']); ?>
   <?php load_css(['css/create']); ?>
 </head>
@@ -13,8 +13,8 @@
   <div class="main-container">
     <div class="form-card">
       <div class="form-header">
-        <h1 class="form-title">Add New Student</h1>
-        <p class="form-subtitle">Enter student information below</p>
+        <h1 class="form-title">Add New Account</h1>
+        <p class="form-subtitle">Enter acount information below</p>
       </div>
       
       <form id="student-form" method="POST" class="student-form">
@@ -56,7 +56,7 @@
         
         <div class="form-actions">
           <button type="submit" class="btn btn-primary btn-submit">
-            Save Student
+            Save Accounts
           </button>
           <a href="<?= base_url() ?>users" class="btn btn-secondary">
             Cancel

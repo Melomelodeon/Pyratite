@@ -14,7 +14,7 @@
     <div id="update-card" class="card">
       <header id="update-header" class="header">
         <!-- Updated title to match original request -->
-        <h2>Edit Student</h2>
+        <h2>Edit Account</h2>
       </header>
       
       <form id="update-student-form" method="POST">
@@ -24,7 +24,7 @@
             type="text" 
             id="update-first-name"
             name="first_name" 
-            value="<?= $student['first_name'] ?>" 
+            value="<?= $user['first_name'] ?>" 
             placeholder="Enter first name"
             required
           >
@@ -36,7 +36,7 @@
             type="text" 
             id="update-last-name"
             name="last_name" 
-            value="<?= $student['last_name'] ?>" 
+            value="<?= $user['last_name'] ?>" 
             placeholder="Enter last name"
             required
           >
@@ -48,19 +48,18 @@
             type="email" 
             id="update-email"
             name="email" 
-            value="<?= $student['email'] ?>" 
+            value="<?= $user['email'] ?>" 
             placeholder="Enter email address"
-            required
+            required`
           >
         </div>
         
         <div class="form-actions">
           <button type="submit" id="update-submit-btn" class="btn-primary">
-            <span class="btn-text">Update Student</span>
-            <span class="btn-loading">Updating...</span>
+            <span class="btn-text">Update Acount</span>
           </button>
           <a id="back-from-update" class="btn-secondary" href="<?= base_url() ?>users">
-            Back to Students
+            Back to Main Page
           </a>
         </div>
       </form>
