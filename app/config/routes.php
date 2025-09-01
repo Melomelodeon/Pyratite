@@ -52,3 +52,6 @@ $router->post('/users/create', 'StudentsController::create');
 $router->get('/users/update/{id}', 'StudentsController::update');
 $router->post('/users/update/{id}', 'StudentsController::update');
 $router->get('/users/delete/{id}', 'StudentsController::delete');
+
+$router->get('your-controller/index/{page}', 'StudentsController::index');
+

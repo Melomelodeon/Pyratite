@@ -3,17 +3,62 @@ defined('PREVENT_DIRECT_ACCESS') or exit('No direct script access allowed');
 
 class StudentsController extends Controller
 {
-
     public function __construct()
     {
         parent::__construct();
         $this->call->model('StudentsModel');
+        $this->call->library('pagination');
+
+        // Set custom theme and CSS classes
+        $this->pagination->set_theme('custom');
+        $this->pagination->set_custom_classes([
+            'nav' => 'pagination-nav',  
+            'ul' => 'pagination-list',
+            'li' => 'pagination-item',
+            'a' => 'pagination-link',
+            'active' => 'active'
+        ]);
+
+
     }
-    function get_all($q = 1)
+    public function index($page = 1)
+    {
+        try {
+            $per_page = isset($_GET['per_page']) ? (int) $_GET['per_page'] : 10;
+            $allowed_per_page = [10, 25, 50, 100];
+            if (!in_array($per_page, $allowed_per_page)) {
+                $per_page = 10;
+            }
+
+            $total_rows = $this->StudentsModel->count_all_records();
+
+            $pagination_data = $this->pagination->initialize(
+                $total_rows,
+                $per_page,
+                $page,
+                'your-controller/index',
+                5
+            );
+
+            $data['records'] = $this->StudentsModel->get_records_with_pagination($pagination_data['limit']);
+            $data['total_records'] = $total_rows;
+            $data['pagination_data'] = $pagination_data;
+            $data['pagination_links'] = $this->pagination->paginate();
+
+            //$this->call->view('your-view', $data);
+            $this->call->view('ui/get_all', ['users' => $data]);
+        } catch (Exception $e) {
+            $this->session->set_flashdata('error', 'Failed to load records: ' . $e->getMessage());
+            redirect('your-controller/index');
+        }
+    }
+
+    function get_all()
     {
         $data = $this->StudentsModel->all();
         $this->call->view('ui/get_all', ['users' => $data]);
     }
+
     function create()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
