@@ -13,13 +13,15 @@
   <div class="main-container">
     <header class="page-header">
       <h1 class="form-title">USERS MANAGEMENT</h1>
-
+      <div>test</div>
       <a id="btn-add-user" class="btn btn-primary" href="<?= base_url() . 'users/create' ?>">
         <span>Add New Accounts</span>
       </a>
 
+      <input id="search-user" type="text" name="search" placeholder="Search users...">
+
       <div class="student-count">
-        <?php echo count($records); ?> Registered accounts
+        <?= $total_records ?> Registered accounts
       </div>
     </header>
     <div class="data-card">
@@ -65,7 +67,7 @@
           </div>
         <?php endif; ?>
 
-        <div>
+        <div id="pagination-info">
           <div><?php echo $pagination_data['info']; ?></div>
         </div>
       </div>

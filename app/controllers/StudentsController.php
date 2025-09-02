@@ -91,4 +91,11 @@ class StudentsController extends Controller
         $this->StudentsModel->soft_delete($id);
         redirect('users');
     }
+
+    public function search()
+    {
+        $query = $this->input->get('q');
+        $data['users'] = $this->User_model->search_users($query);
+        $this->load->view('partials/user_rows', $data); // returns only <tr> rows
+    }
 }
