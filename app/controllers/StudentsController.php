@@ -19,7 +19,7 @@ class StudentsController extends Controller
         ]);
 
     }
-    public function index($page = 1)
+    public function get_all($page = 1)
     {
         try {
             $per_page = isset($_GET['per_page']) ? (int) $_GET['per_page'] : 10;
@@ -34,7 +34,7 @@ class StudentsController extends Controller
                 $total_rows,
                 $per_page,
                 $page,
-                '/users/index',
+                '/users/get-all',
                 5
             );
 
@@ -43,25 +43,21 @@ class StudentsController extends Controller
             $data['pagination_data'] = $pagination_data;
             $data['pagination_links'] = $this->pagination->paginate();
 
-            //$this->call->view('your-view', $data);
-            //$this->call->view('ui/get_all', ['users' => $data]);
             $this->call->view('ui/get_all', $data);
-            /*
-            echo "<pre>";
-            var_dump($data);
-            echo "</pre>";
-            */
+
         } catch (Exception $e) {
             $this->session->set_flashdata('error', 'Failed to load records: ' . $e->getMessage());
-            redirect('users/index');
+            redirect('users/get-all');
         }
     }
 
+    /*
     function get_all()
     {
         $data = $this->StudentsModel->all();
         $this->call->view('ui/get_all', ['users' => $data]);
     }
+    */
 
     function create()
     {
