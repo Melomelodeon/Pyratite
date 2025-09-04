@@ -27,8 +27,8 @@ class StudentsController extends Controller
             if (!in_array($per_page, $allowed_per_page)) {
                 $per_page = 10;
             }
-
-            $total_rows = $this->StudentsModel->count_all_records();
+            $search = isset($_GET['search']) ? trim($_GET['search']) : null;
+            $total_rows = $this->StudentsModel->count_all_records($search);
 
             $pagination_data = $this->pagination->initialize(
                 $total_rows,
@@ -38,7 +38,7 @@ class StudentsController extends Controller
                 5
             );
 
-            $data['records'] = $this->StudentsModel->get_records_with_pagination($pagination_data['limit']);
+            $data['records'] = $this->StudentsModel->get_records_with_pagination($pagination_data['limit'], $search);
             $data['total_records'] = $total_rows;
             $data['pagination_data'] = $pagination_data;
             $data['pagination_links'] = $this->pagination->paginate();
@@ -50,6 +50,7 @@ class StudentsController extends Controller
             redirect('users/get-all');
         }
     }
+
 
     /*
     function get_all()

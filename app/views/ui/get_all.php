@@ -13,12 +13,15 @@
   <div class="main-container">
     <header class="page-header">
       <h1 class="form-title">USERS MANAGEMENT</h1>
-      <div>test</div>
       <a id="btn-add-user" class="btn btn-primary" href="<?= base_url() . 'users/create' ?>">
         <span>Add New Accounts</span>
       </a>
 
-      <input id="search-user" type="text" name="search" placeholder="Search users...">
+      <!-- <input id="search-user" type="text" name="search" placeholder="Search users..."> -->
+      <form method="get" action="/users/get-all">
+        <input id="search-user" type="text" name="search" value="<?= $search ?? '' ?>" placeholder="Search...">
+        <!-- <button type="submit">Search</button> -->
+      </form>
 
       <div class="student-count">
         <?= $total_records ?> Registered accounts
