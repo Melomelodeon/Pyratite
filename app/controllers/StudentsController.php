@@ -6,7 +6,6 @@ class StudentsController extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this->call->model('StudentsModel');
         $this->call->library('pagination');
 
         $this->pagination->set_theme('custom');
@@ -30,12 +29,21 @@ class StudentsController extends Controller
             $search = isset($_GET['search']) ? trim($_GET['search']) : null;
             $total_rows = $this->StudentsModel->count_all_records($search);
 
+            $query_params = [];
+            if ($search) {
+                $query_params['search'] = $search;
+            }
+            if (isset($_GET['per_page'])) {
+                $query_params['per_page'] = $_GET['per_page'];
+            }
+
             $pagination_data = $this->pagination->initialize(
                 $total_rows,
                 $per_page,
                 $page,
                 '/users/get-all',
-                5
+                5,
+                $query_params
             );
 
             $data['records'] = $this->StudentsModel->get_records_with_pagination($pagination_data['limit'], $search);
@@ -50,15 +58,6 @@ class StudentsController extends Controller
             redirect('users/get-all');
         }
     }
-
-
-    /*
-    function get_all()
-    {
-        $data = $this->StudentsModel->all();
-        $this->call->view('ui/get_all', ['users' => $data]);
-    }
-    */
 
     function create()
     {

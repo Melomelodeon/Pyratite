@@ -5,8 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Add Account</title>
-  <?php load_css(['css/style']); ?>
-  <?php load_css(['css/create']); ?>
+  <link rel="stylesheet" href="<?= base_url() . 'public/css/style.css' ?>">
+  <link rel="stylesheet" href="<?= base_url() . 'public/css/create.css' ?>">
 </head>
 
 <body>

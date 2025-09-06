@@ -5,15 +5,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Edit Student</title>
-  <?php load_css(['css/style']); ?>
-  <?php load_css(['css/update']); ?>
+  <link rel="stylesheet" href="<?= base_url() . 'public/css/style.css' ?>">
+  <link rel="stylesheet" href="<?= base_url() . 'public/css/update.css' ?>">
 </head>
 
 <body>
   <div id="update-container" class="container">
     <div id="update-card" class="card">
       <header id="update-header" class="header">
-        <!-- Updated title to match original request -->
         <h2>Edit Account</h2>
       </header>
       

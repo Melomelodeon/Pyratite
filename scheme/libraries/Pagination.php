@@ -1,5 +1,5 @@
 <?php
-defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
+defined('PREVENT_DIRECT_ACCESS') or exit('No direct script access allowed');
 /**
  * ------------------------------------------------------------------
  * LavaLust - an opensource lightweight PHP MVC Framework
@@ -99,10 +99,10 @@ class Pagination
      * @var array CSS class mappings for HTML generation
      */
     protected $classes = [
-        'nav'    => 'pagination-nav',
-        'ul'     => 'pagination-list',
-        'li'     => 'pagination-item',
-        'a'      => 'pagination-link',
+        'nav' => 'pagination-nav',
+        'ul' => 'pagination-list',
+        'li' => 'pagination-item',
+        'a' => 'pagination-link',
         'active' => 'active'
     ];
 
@@ -143,19 +143,19 @@ class Pagination
         switch ($theme) {
             case 'bootstrap':
                 $this->classes = [
-                    'nav'    => 'd-flex justify-content-center',
-                    'ul'     => 'pagination',
-                    'li'     => 'page-item',
-                    'a'      => 'page-link',
+                    'nav' => 'd-flex justify-content-center',
+                    'ul' => 'pagination',
+                    'li' => 'page-item',
+                    'a' => 'page-link',
                     'active' => 'active'
                 ];
                 break;
             case 'tailwind':
                 $this->classes = [
-                    'nav'    => 'flex justify-center mt-4',
-                    'ul'     => 'inline-flex -space-x-px',
-                    'li'     => 'px-1',
-                    'a'      => 'inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 first:rounded-l-md last:rounded-r-md focus:outline-none focus:ring-2 focus:ring-indigo-500',
+                    'nav' => 'flex justify-center mt-4',
+                    'ul' => 'inline-flex -space-x-px',
+                    'li' => 'px-1',
+                    'a' => 'inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 first:rounded-l-md last:rounded-r-md focus:outline-none focus:ring-2 focus:ring-indigo-500',
                     'active' => 'z-10 bg-indigo-50 border-indigo-500 text-indigo-600 hover:bg-indigo-50'
                 ];
                 break;
@@ -190,6 +190,43 @@ class Pagination
         }
     }
 
+    // /**
+    //  * Initialize pagination values and logic
+    //  *
+    //  * @param int $total_rows Total number of database rows
+    //  * @param int $rows_per_page Rows to display per page
+    //  * @param int $page_num Current page number
+    //  * @param string $url Base URL for page links
+    //  * @param int $crumbs Number of visible page links
+    //  * @return array Metadata for pagination
+    //  */
+    // public function initialize($total_rows, $rows_per_page, $page_num, $url, $crumbs = 5)
+    // {
+    //     $this->crumbs = $crumbs;
+    //     $this->rows_per_page = (int) $rows_per_page;
+    //     $this->page_array['url'] = $url;
+
+    //     $last_page = max(1, ceil($total_rows / $this->rows_per_page));
+    //     $this->page_num = max(1, min($page_num, $last_page));
+
+    //     $offset = ($this->page_num - 1) * $this->rows_per_page;
+    //     $this->page_array['limit'] = 'LIMIT ' . $offset . ',' . $this->rows_per_page;
+    //     $this->page_array['current'] = $this->page_num;
+    //     $this->page_array['previous'] = max(1, $this->page_num - 1);
+    //     $this->page_array['next'] = min($last_page, $this->page_num + 1);
+    //     $this->page_array['last'] = $last_page;
+    //     $this->page_array['info'] = 'Page (' . $this->page_num . ' of ' . $last_page . ')';
+    //     $this->page_array['pages'] = $this->render_pages($this->page_num, $last_page);
+
+    //     return $this->page_array;
+    // }
+
+    /**
+     * custom query parameters to append to each page link
+     * 
+     */
+    protected $query_params = [];
+
     /**
      * Initialize pagination values and logic
      *
@@ -198,24 +235,26 @@ class Pagination
      * @param int $page_num Current page number
      * @param string $url Base URL for page links
      * @param int $crumbs Number of visible page links
+     * @param array $query_params (optional) Query parameters to append to links
      * @return array Metadata for pagination
      */
-    public function initialize($total_rows, $rows_per_page, $page_num, $url, $crumbs = 5)
+    public function initialize($total_rows, $rows_per_page, $page_num, $url, $crumbs = 5, $query_params = [])
     {
         $this->crumbs = $crumbs;
         $this->rows_per_page = (int) $rows_per_page;
         $this->page_array['url'] = $url;
+        $this->query_params = $query_params;
 
         $last_page = max(1, ceil($total_rows / $this->rows_per_page));
         $this->page_num = max(1, min($page_num, $last_page));
 
         $offset = ($this->page_num - 1) * $this->rows_per_page;
-        $this->page_array['limit'] = 'LIMIT '.$offset.','.$this->rows_per_page;
+        $this->page_array['limit'] = 'LIMIT ' . $offset . ',' . $this->rows_per_page;
         $this->page_array['current'] = $this->page_num;
         $this->page_array['previous'] = max(1, $this->page_num - 1);
         $this->page_array['next'] = min($last_page, $this->page_num + 1);
         $this->page_array['last'] = $last_page;
-        $this->page_array['info'] = 'Page ('.$this->page_num.' of '.$last_page.')';
+        $this->page_array['info'] = 'Page (' . $this->page_num . ' of ' . $last_page . ')';
         $this->page_array['pages'] = $this->render_pages($this->page_num, $last_page);
 
         return $this->page_array;
@@ -257,9 +296,10 @@ class Pagination
      */
     public function paginate()
     {
-        if (empty($this->page_array['pages'])) return '';
+        if (empty($this->page_array['pages']))
+            return '';
 
-        $html = '<nav class="'.$this->classes['nav'].'"><ul class="'.$this->classes['ul'].'">';
+        $html = '<nav class="' . $this->classes['nav'] . '"><ul class="' . $this->classes['ul'] . '">';
 
         $html .= $this->build_link(1, $this->first_link);
         $html .= $this->build_link($this->page_array['previous'], $this->prev_link);
@@ -284,11 +324,26 @@ class Pagination
      * @param string $active_class Optional active class
      * @return string HTML list item with link
      */
+
+    // protected function build_link($page, $label, $active_class = '')
+    // {
+    //     $url = site_url($this->page_array['url'].$this->page_delimiter.$page);
+    //     return '<li class="'.$this->classes['li'].'">
+    //                 <a class="'.$this->classes['a'].' '.$active_class.'" href="'.$url.'">'.$label.'</a>
+    //             </li>';
+    // }
+
     protected function build_link($page, $label, $active_class = '')
     {
-        $url = site_url($this->page_array['url'].$this->page_delimiter.$page);
-        return '<li class="'.$this->classes['li'].'">
-                    <a class="'.$this->classes['a'].' '.$active_class.'" href="'.$url.'">'.$label.'</a>
-                </li>';
+        $url = site_url($this->page_array['url'] . $this->page_delimiter . $page);
+
+        // Append query params if any
+        if (!empty($this->query_params)) {
+            $url .= '?' . http_build_query($this->query_params);
+        }
+
+        return '<li class="' . $this->classes['li'] . '">
+                <a class="' . $this->classes['a'] . ' ' . $active_class . '" href="' . $url . '">' . $label . '</a>
+            </li>';
     }
 }

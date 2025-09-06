@@ -5,8 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Students List</title>
-  <?php load_css(['css/style']); ?>
-  <?php load_css(['css/get_all']); ?>
+  <link rel="stylesheet" href="<?= base_url() . 'public/css/style.css' ?>">
+  <link rel="stylesheet" href="<?= base_url() . 'public/css/get_all.css' ?>">
 </head>
 
 <body>
@@ -17,10 +17,8 @@
         <span>Add New Accounts</span>
       </a>
 
-      <!-- <input id="search-user" type="text" name="search" placeholder="Search users..."> -->
       <form method="get" action="/users/get-all">
         <input id="search-user" type="text" name="search" value="<?= $search ?? '' ?>" placeholder="Search...">
-        <!-- <button type="submit">Search</button> -->
       </form>
 
       <div class="student-count">
@@ -66,6 +64,19 @@
       <div>
         <?php if (!empty($pagination_links)): ?>
           <div>
+            <?php
+            if (!empty($pagination_links) && !empty($search)) {
+              $pagination_links = preg_replace_callback(
+                '/href="([^"]*)"/',
+                function ($matches) use ($search) {
+                  $url = $matches[1];
+                  $separator = (strpos($url, '?') === false) ? '?' : '&';
+                  return 'href="' . $url . $separator . 'search=' . urlencode($search) . '"';
+                },
+                $pagination_links
+              );
+            }
+            ?>
             <?php echo $pagination_links; ?>
           </div>
         <?php endif; ?>
