@@ -64,19 +64,6 @@
       <div>
         <?php if (!empty($pagination_links)): ?>
           <div>
-            <?php
-            if (!empty($pagination_links) && !empty($search)) {
-              $pagination_links = preg_replace_callback(
-                '/href="([^"]*)"/',
-                function ($matches) use ($search) {
-                  $url = $matches[1];
-                  $separator = (strpos($url, '?') === false) ? '?' : '&';
-                  return 'href="' . $url . $separator . 'search=' . urlencode($search) . '"';
-                },
-                $pagination_links
-              );
-            }
-            ?>
             <?php echo $pagination_links; ?>
           </div>
         <?php endif; ?>

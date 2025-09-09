@@ -222,8 +222,7 @@ class Pagination
     // }
 
     /**
-     * custom query parameters to append to each page link
-     * 
+     * Custom query parameters to append to each page link.
      */
     protected $query_params = [];
 
