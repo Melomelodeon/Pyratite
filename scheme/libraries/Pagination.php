@@ -190,42 +190,6 @@ class Pagination
         }
     }
 
-    // /**
-    //  * Initialize pagination values and logic
-    //  *
-    //  * @param int $total_rows Total number of database rows
-    //  * @param int $rows_per_page Rows to display per page
-    //  * @param int $page_num Current page number
-    //  * @param string $url Base URL for page links
-    //  * @param int $crumbs Number of visible page links
-    //  * @return array Metadata for pagination
-    //  */
-    // public function initialize($total_rows, $rows_per_page, $page_num, $url, $crumbs = 5)
-    // {
-    //     $this->crumbs = $crumbs;
-    //     $this->rows_per_page = (int) $rows_per_page;
-    //     $this->page_array['url'] = $url;
-
-    //     $last_page = max(1, ceil($total_rows / $this->rows_per_page));
-    //     $this->page_num = max(1, min($page_num, $last_page));
-
-    //     $offset = ($this->page_num - 1) * $this->rows_per_page;
-    //     $this->page_array['limit'] = 'LIMIT ' . $offset . ',' . $this->rows_per_page;
-    //     $this->page_array['current'] = $this->page_num;
-    //     $this->page_array['previous'] = max(1, $this->page_num - 1);
-    //     $this->page_array['next'] = min($last_page, $this->page_num + 1);
-    //     $this->page_array['last'] = $last_page;
-    //     $this->page_array['info'] = 'Page (' . $this->page_num . ' of ' . $last_page . ')';
-    //     $this->page_array['pages'] = $this->render_pages($this->page_num, $last_page);
-
-    //     return $this->page_array;
-    // }
-
-    /**
-     * Custom query parameters to append to each page link.
-     */
-    protected $query_params = [];
-
     /**
      * Initialize pagination values and logic
      *
@@ -237,6 +201,13 @@ class Pagination
      * @param array $query_params (optional) Query parameters to append to links
      * @return array Metadata for pagination
      */
+
+    /* 
+    Defined ustom query parameters to append to each page link.
+    Customized to accept and append query to each pagination link.
+     */
+    protected $query_params = [];
+
     public function initialize($total_rows, $rows_per_page, $page_num, $url, $crumbs = 5, $query_params = [])
     {
         $this->crumbs = $crumbs;
@@ -323,14 +294,6 @@ class Pagination
      * @param string $active_class Optional active class
      * @return string HTML list item with link
      */
-
-    // protected function build_link($page, $label, $active_class = '')
-    // {
-    //     $url = site_url($this->page_array['url'].$this->page_delimiter.$page);
-    //     return '<li class="'.$this->classes['li'].'">
-    //                 <a class="'.$this->classes['a'].' '.$active_class.'" href="'.$url.'">'.$label.'</a>
-    //             </li>';
-    // }
 
     protected function build_link($page, $label, $active_class = '')
     {

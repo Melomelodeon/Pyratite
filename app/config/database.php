@@ -61,13 +61,25 @@ $database['main'] = array(
     'driver'    => 'mysql',
     'hostname'  => 'sql12.freesqldatabase.com',
     'port'      => '3306',
-    'username'  => 'sql12798159',
-    'password'  => 'TQiald1AMa',
-    'database'  => 'sql12798159',
+    'username'  => 'sql12799614',
+    'password'  => 'GSvFu9PytX',
+    'database'  => 'sql12799614',
     'charset'   => 'utf8mb4',
     'dbprefix'  => '',
     'path'      => ''
 );
+
+/* $database['main'] = array(
+    'driver'    => 'mysql',
+    'hostname'  => '127.0.0.1',
+    'port'      => '3306',
+    'username'  => 'root',
+    'password'  => '',
+    'database'  => 'lava_lust_db_test',
+    'charset'   => 'utf8mb4',
+    'dbprefix'  => '',
+    'path'      => ''
+); */
 
 
 ?>

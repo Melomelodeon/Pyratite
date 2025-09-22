@@ -78,8 +78,12 @@ $config['ENVIRONMENT']             = 'development';
 |
 | WARNING: You MUST set this value!
 |
+| Modified base url to generate url automaticaly if not provided. defaults to localhost:3000
+|
 */
-$config['base_url'] 				= '';
+$config['base_url'] 				= (strpos($_SERVER['HTTP_HOST'] ?? '', 'localhost') !== false)
+    ? 'http://localhost:3000/'
+    : 'https://' . ($_SERVER['HTTP_HOST'] ?? '') . '/';
 
 /*
 |--------------------------------------------------------------------------
@@ -88,9 +92,11 @@ $config['base_url'] 				= '';
 |
 | If you are using mod_rewrite to remove index.php in the URL set this
 | variable to blank.
+| 
+| removed index.php
 |
 */
-$config['index_page']               = 'index.php';
+$config['index_page']               = '';
 
 /*
 |--------------------------------------------------------------------------
