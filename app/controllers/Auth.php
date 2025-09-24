@@ -7,17 +7,15 @@ class Auth extends Controller
     {
         parent::__construct();
         $this->call->model('StudentsModel');
+        $this->call->library('session');
     }
 
-    public function test()
-    {
-        $this->call->view('login');
-    }
+
 
     public function login()
     {
         // Check for remember me cookie first
-        if (!isset($_SESSION['logged_in']) && isset($_COOKIE['remember_user'])) {
+        if (!$this->session->userdata('logged_in') && isset($_COOKIE['remember_user'])) {
             $cookie_data = json_decode($_COOKIE['remember_user'], true);
             if ($cookie_data && isset($cookie_data['email']) && isset($cookie_data['token'])) {
                 $user = $this->StudentsModel->find_by_email($cookie_data['email']);
@@ -25,11 +23,13 @@ class Auth extends Controller
                     // Create a simple token based on user data (in production, use more secure method)
                     $expected_token = md5($user['email'] . $user['password'] . 'remember_salt');
                     if ($cookie_data['token'] === $expected_token) {
-                        // Auto-login from cookie
-                        $_SESSION['user_id'] = $user['id'];
-                        $_SESSION['user_email'] = $user['email'];
-                        $_SESSION['user_name'] = $user['first_name'] . ' ' . $user['last_name'];
-                        $_SESSION['logged_in'] = true;
+                        // Auto-login from cookie using session library
+                        $this->session->set_userdata([
+                            'user_id' => $user['id'],
+                            'user_email' => $user['email'],
+                            'user_name' => $user['first_name'] . ' ' . $user['last_name'],
+                            'logged_in' => true
+                        ]);
                         redirect('/users');
                     }
                 }
@@ -45,10 +45,13 @@ class Auth extends Controller
 
             if ($user && $password === $user['password']) {
                 if ($user['active'] == 1) {
-                    $_SESSION['user_id'] = $user['id'];
-                    $_SESSION['user_email'] = $user['email'];
-                    $_SESSION['user_name'] = $user['first_name'] . ' ' . $user['last_name'];
-                    $_SESSION['logged_in'] = true;
+                    // Set session data using LavaLust session library
+                    $this->session->set_userdata([
+                        'user_id' => $user['id'],
+                        'user_email' => $user['email'],
+                        'user_name' => $user['first_name'] . ' ' . $user['last_name'],
+                        'logged_in' => true
+                    ]);
 
                     // Handle remember me functionality
                     if ($remember) {
@@ -112,6 +115,45 @@ class Auth extends Controller
         }
 
         $this->call->view('register', $data ?? []);
+    }
+
+    public function logout()
+    {
+        // Clear remember me cookie
+        if (isset($_COOKIE['remember_user'])) {
+            setcookie('remember_user', '', time() - 3600, '/');
+        }
+        
+        // Clear session data using LavaLust session library
+        $this->session->unset_userdata(['user_id', 'user_email', 'user_name', 'logged_in']);
+        redirect('auth/login');
+    }
+
+    /**
+     * Check if user is logged in
+     *
+     * @return bool
+     */
+    public function is_logged_in()
+    {
+        return (bool) $this->session->userdata('logged_in');
+    }
+
+    /**
+     * Get current user data
+     *
+     * @return array|null
+     */
+    public function get_user_data()
+    {
+        if ($this->is_logged_in()) {
+            return [
+                'user_id' => $this->session->userdata('user_id'),
+                'user_email' => $this->session->userdata('user_email'),
+                'user_name' => $this->session->userdata('user_name')
+            ];
+        }
+        return null;
     }
 
 }

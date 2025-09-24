@@ -25,6 +25,7 @@
         <?= $total_records ?> Registered accounts
       </div>
     </header>
+
     <div class="data-card">
       <table class="data-table" id="students-table">
         <thead>
@@ -42,7 +43,10 @@
               <td data-label="Student ID"><?= htmlspecialchars($user['id']) ?></td>
               <td data-label="First Name"><?= htmlspecialchars($user['first_name']) ?></td>
               <td data-label="Last Name"><?= htmlspecialchars($user['last_name']) ?></td>
-              <td data-label="Email" class="<?= (isset($user['active']) && $user['active'] == 0) ? 'inactive-email' : '' ?>"><?= htmlspecialchars($user['email']) ?></td>
+              <td data-label="Email"
+                class="<?= (isset($user['active']) && $user['active'] == 0) ? 'inactive-email' : '' ?>">
+                <?= htmlspecialchars($user['email']) ?>
+              </td>
               <td data-label="Actions" class="table-actions">
                 <a href="<?= base_url() . 'users/update/' . $user['id'] ?>" class="btn btn-secondary btn-small"
                   aria-label="Edit <?= htmlspecialchars($user['first_name'] . ' ' . $user['last_name']) ?>">
@@ -78,9 +82,11 @@
   <!-- Floating Draggable Logout Button -->
   <div id="floating-logout" class="floating-logout-container" title="Drag to move">
     <button type="button" id="logout-btn" class="floating-logout-btn" onclick="showLogoutPopup()" title="Logout">
-      <span>🗑️</span>
+      <span>Welcome, <?= htmlspecialchars($user_name) ?></span>
+      <span class="user-email">(<?= htmlspecialchars($user_email) ?>)</span>
+      <span>Logout 🗑️</span>
     </button>
-    
+
     <!-- Logout Popup -->
     <div id="logout-popup" class="logout-popup" style="display: none;">
       <div class="popup-content">
@@ -114,7 +120,7 @@
     }
 
     // Close popup with Escape key
-    document.addEventListener('keydown', function(event) {
+    document.addEventListener('keydown', function (event) {
       if (event.key === 'Escape') {
         hideLogoutPopup();
       }
@@ -125,39 +131,39 @@
     let dragOffset = { x: 0, y: 0 };
     const floatingElement = document.getElementById('floating-logout');
 
-    floatingElement.addEventListener('mousedown', function(e) {
+    floatingElement.addEventListener('mousedown', function (e) {
       if (e.target.closest('#logout-popup')) return; // Don't drag when clicking popup
-      
+
       isDragging = true;
       const rect = floatingElement.getBoundingClientRect();
       dragOffset.x = e.clientX - rect.left;
       dragOffset.y = e.clientY - rect.top;
-      
+
       floatingElement.style.cursor = 'grabbing';
       document.body.style.userSelect = 'none';
     });
 
-    document.addEventListener('mousemove', function(e) {
+    document.addEventListener('mousemove', function (e) {
       if (!isDragging) return;
-      
+
       e.preventDefault();
       const x = e.clientX - dragOffset.x;
       const y = e.clientY - dragOffset.y;
-      
+
       // Keep within viewport bounds
       const maxX = window.innerWidth - floatingElement.offsetWidth;
       const maxY = window.innerHeight - floatingElement.offsetHeight;
-      
+
       const boundedX = Math.max(0, Math.min(x, maxX));
       const boundedY = Math.max(0, Math.min(y, maxY));
-      
+
       floatingElement.style.left = boundedX + 'px';
       floatingElement.style.top = boundedY + 'px';
       floatingElement.style.right = 'auto';
       floatingElement.style.bottom = 'auto';
     });
 
-    document.addEventListener('mouseup', function() {
+    document.addEventListener('mouseup', function () {
       if (isDragging) {
         isDragging = false;
         floatingElement.style.cursor = 'grab';
@@ -166,9 +172,9 @@
     });
 
     // Touch events for mobile
-    floatingElement.addEventListener('touchstart', function(e) {
+    floatingElement.addEventListener('touchstart', function (e) {
       if (e.target.closest('#logout-popup')) return;
-      
+
       isDragging = true;
       const touch = e.touches[0];
       const rect = floatingElement.getBoundingClientRect();
@@ -176,32 +182,30 @@
       dragOffset.y = touch.clientY - rect.top;
     });
 
-    document.addEventListener('touchmove', function(e) {
+    document.addEventListener('touchmove', function (e) {
       if (!isDragging) return;
-      
+
       e.preventDefault();
       const touch = e.touches[0];
       const x = touch.clientX - dragOffset.x;
       const y = touch.clientY - dragOffset.y;
-      
+
       const maxX = window.innerWidth - floatingElement.offsetWidth;
       const maxY = window.innerHeight - floatingElement.offsetHeight;
-      
+
       const boundedX = Math.max(0, Math.min(x, maxX));
       const boundedY = Math.max(0, Math.min(y, maxY));
-      
+
       floatingElement.style.left = boundedX + 'px';
       floatingElement.style.top = boundedY + 'px';
       floatingElement.style.right = 'auto';
       floatingElement.style.bottom = 'auto';
     });
 
-    document.addEventListener('touchend', function() {
+    document.addEventListener('touchend', function () {
       isDragging = false;
     });
   </script>
 </body>
-
-
 
 </html>

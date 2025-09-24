@@ -365,31 +365,80 @@
   z-index: 1000;
   cursor: grab;
   user-select: none;
+  animation: fadeInUp 0.5s ease-out;
 }
 
 .floating-logout-container:active {
   cursor: grabbing;
 }
 
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Floating Logout Button */
 .floating-logout-btn {
-  background: var(--bg-secondary);
-  border: none;
-  color: white;
-  padding: var(--space-md);
-  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-elevated) 100%);
+  border: 1px solid var(--border-primary);
+  color: var(--text-primary);
+  padding: var(--space-md) var(--space-xl);
+  border-radius: var(--radius-xl);
   cursor: pointer;
-  transition: all 0.2s ease;
-  font-size:  1rem;
+  transition: all 0.3s ease;
+  font-size: 0.875rem;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-xs);
   box-shadow: var(--shadow-str);
+  backdrop-filter: blur(10px);
+  min-width: 200px;
+  max-width: 250px;
+  align-items: center;
 }
 
 .floating-logout-btn:hover {
-  transform: scale(1.1);
+  transform: translateY(-2px);
   box-shadow: var(--shadow-str);
+}
+
+.floating-logout-btn span:first-child {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+}
+
+.floating-logout-btn .user-email {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+.floating-logout-btn span:last-child {
+  top: var(--space-sm);
+  right: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--accent-one);
+  color: var(--text-primary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  border-radius: var(--radius-md);
+  width: 100%;
+  margin-top: var(--space-md);
+}
+
+.floating-logout-btn:hover span:last-child {
+  transform: scale(1);
 }
 
 /* Logout Popup */
@@ -404,7 +453,7 @@
   background: var(--bg-secondary);
   padding: var(--space-lg);
   border-radius: var(--radius-xl);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow-str);
   width: 280px;
   text-align: center;
   border: 1px solid var(--border-primary);
@@ -414,7 +463,7 @@
 .popup-content h3 {
   color: var(--text-primary);
   margin-bottom: var(--space-md);
-  font-size: 1.25rem;
+  font-size: 1rem;
 }
 
 .popup-content p {
@@ -440,6 +489,7 @@
     transform: translateY(100px);
     opacity: 0;
   }
+
   to {
     transform: translateY(0);
     opacity: 1;
@@ -452,29 +502,29 @@
     bottom: 15px;
     right: 15px;
   }
-  
+
   .floating-logout-btn {
     width: 50px;
     height: 50px;
     font-size: 1.3rem;
     padding: var(--space-sm);
   }
-  
+
   .logout-popup {
     bottom: 60px;
     right: -100px;
     left: auto;
   }
-  
+
   .popup-content {
     width: 250px;
   }
-  
+
   .popup-actions {
     flex-direction: column;
     gap: var(--space-sm);
   }
-  
+
   .popup-actions .btn {
     width: 100%;
     min-width: unset;

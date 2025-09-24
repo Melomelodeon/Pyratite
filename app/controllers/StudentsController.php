@@ -6,7 +6,12 @@ class StudentsController extends Controller
     public function __construct()
     {
         parent::__construct();
+        $this->call->model('StudentsModel');
         $this->call->library('pagination');
+        $this->call->library('session');
+
+        // Check authentication for all methods
+        $this->check_authentication();
 
         $this->pagination->set_theme('custom');
         $this->pagination->set_custom_classes([
@@ -16,7 +21,27 @@ class StudentsController extends Controller
             'a' => 'pagination-link',
             'active' => 'active'
         ]);
+    }
 
+    /**
+     * Check if user is authenticated
+     */
+    private function check_authentication()
+    {
+        if (!$this->session->userdata('logged_in')) {
+            redirect('auth/login');
+        }
+    }
+
+    /**
+     * Get user session data for views
+     */
+    private function get_user_data()
+    {
+        return [
+            'user_name' => $this->session->userdata('user_name'),
+            'user_email' => $this->session->userdata('user_email')
+        ];
     }
 
     public function get_all($page = 1)
@@ -51,6 +76,10 @@ class StudentsController extends Controller
             $data['total_records'] = $total_rows;
             $data['pagination_data'] = $pagination_data;
             $data['pagination_links'] = $this->pagination->paginate();
+            $data['search'] = $search; // Add search term to view data
+            
+            // Add user session data
+            $data = array_merge($data, $this->get_user_data());
 
             $this->call->view('ui/get_all', $data);
 
@@ -73,7 +102,9 @@ class StudentsController extends Controller
             $this->StudentsModel->insert($data);
             redirect('users');
         }
-        $this->call->view('ui/create');
+        
+        $data = $this->get_user_data();
+        $this->call->view('ui/create', $data);
     }
     function update($id)
     {
@@ -89,7 +120,9 @@ class StudentsController extends Controller
             $this->StudentsModel->update($id, $data);
             redirect('users');
         }
-        $this->call->view('ui/update', ['user' => $contents]);
+        
+        $data = array_merge(['user' => $contents], $this->get_user_data());
+        $this->call->view('ui/update', $data);
     }
     function delete($id)
     {
@@ -97,22 +130,12 @@ class StudentsController extends Controller
         redirect('users');
     }
 
-    public function search()
-    {
-        $query = $this->input->get('q');
-        $data['users'] = $this->User_model->search_users($query);
-        $this->load->view('partials/user_rows', $data);
-    }
+
 
     public function logout()
     {
-        // Clear remember me cookie
-        if (isset($_COOKIE['remember_user'])) {
-            setcookie('remember_user', '', time() - 3600, '/');
-        }
-        
-        session_destroy();
-        redirect('auth/login');
+        // Redirect to Auth controller logout method
+        redirect('auth/logout');
     }
 
 }
