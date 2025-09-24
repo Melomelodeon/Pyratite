@@ -18,6 +18,7 @@ class StudentsController extends Controller
         ]);
 
     }
+
     public function get_all($page = 1)
     {
         try {
@@ -65,7 +66,9 @@ class StudentsController extends Controller
             $data = [
                 'last_name' => $_POST['last_name'],
                 'first_name' => $_POST['first_name'],
-                'email' => $_POST['email']
+                'email' => $_POST['email'],
+                'password' => $_POST['password'],
+                'active' => $_POST['active']
             ];
             $this->StudentsModel->insert($data);
             redirect('users');
@@ -79,7 +82,9 @@ class StudentsController extends Controller
             $data = [
                 'last_name' => $_POST['last_name'],
                 'first_name' => $_POST['first_name'],
-                'email' => $_POST['email']
+                'email' => $_POST['email'],
+                'password' => $_POST['password'],
+                'active' => $_POST['active']
             ];
             $this->StudentsModel->update($id, $data);
             redirect('users');
@@ -96,6 +101,18 @@ class StudentsController extends Controller
     {
         $query = $this->input->get('q');
         $data['users'] = $this->User_model->search_users($query);
-        $this->load->view('partials/user_rows', $data); // returns only <tr> rows
+        $this->load->view('partials/user_rows', $data);
     }
+
+    public function logout()
+    {
+        // Clear remember me cookie
+        if (isset($_COOKIE['remember_user'])) {
+            setcookie('remember_user', '', time() - 3600, '/');
+        }
+        
+        session_destroy();
+        redirect('auth/login');
+    }
+
 }

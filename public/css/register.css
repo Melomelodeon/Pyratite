@@ -1,0 +1,201 @@
+/* Register Page Specific Styles */
+
+/* Name Fields Row */
+.name-row {
+  display: flex;
+  gap: var(--space-md);
+  width: 100%;
+}
+
+.name-row .form-group {
+  flex: 1;
+  margin-bottom: var(--space-lg);
+}
+
+/* Form Help Text */
+.form-help {
+  display: block;
+  margin-top: var(--space-xs);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-style: italic;
+}
+
+/* Terms and Conditions Link */
+.remember-me a.forgot-password {
+  text-decoration: underline;
+  color: var(--accent-one);
+}
+
+.remember-me a.forgot-password:hover {
+  color: var(--accent-one-hover);
+}
+
+/* Register Card Adjustments */
+.register-card {
+  max-width: 450px;
+}
+
+/* Register Form Specific Spacing */
+.register-form .form-group {
+  margin-bottom: var(--space-lg);
+}
+
+/* Password Strength Indicator */
+.password-strength {
+  margin-top: var(--space-xs);
+  height: 4px;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.password-strength-bar {
+  height: 100%;
+  width: 0%;
+  transition: width 0.3s ease, background-color 0.3s ease;
+  border-radius: var(--radius-sm);
+}
+
+.password-strength-weak {
+  background: #ef4444;
+  width: 33%;
+}
+
+.password-strength-medium {
+  background: #f59e0b;
+  width: 66%;
+}
+
+.password-strength-strong {
+  background: var(--success);
+  width: 100%;
+}
+
+/* Form Validation States */
+.form-input.invalid {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.form-input.valid {
+  border-color: var(--success);
+  box-shadow: 0 0 0 3px rgba(122, 250, 175, 0.1);
+}
+
+/* Error Message for Individual Fields */
+.field-error {
+  display: block;
+  margin-top: var(--space-xs);
+  color: #ef4444;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* Register Button Loading State */
+.register-button.loading {
+  opacity: 0.7;
+  cursor: not-allowed;
+  position: relative;
+}
+
+.register-button.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top: 2px solid var(--text-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Registration Success Animation */
+.register-success {
+  background: rgba(122, 250, 175, 0.1);
+  border: 1px solid rgba(122, 250, 175, 0.2);
+  color: var(--success);
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-lg);
+  text-align: center;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Adjustments for Register */
+@media (max-width: 480px) {
+  .register-card {
+    margin: 0;
+    max-width: 100%;
+  }
+  
+  .login-header {
+    padding: var(--space-xl) var(--space-lg) var(--space-md);
+  }
+  
+  .login-form {
+    padding: var(--space-lg);
+  }
+}
+
+/* Password Input Container and Toggle */
+.password-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input-container .password-input {
+  padding-right: 3rem; /* Make space for the toggle button */
+  flex: 1;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  color: var(--text-muted);
+  transition: color 0.2s ease;
+  font-size: 1.1rem;
+  line-height: 1;
+  z-index: 1;
+}
+
+.password-toggle:hover {
+  color: var(--text-primary);
+}
+
+.password-toggle:focus {
+  outline: 2px solid var(--accent-one);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.password-eye {
+  display: inline-block;
+  user-select: none;
+  transition: transform 0.1s ease;
+}
+
+.password-toggle:active .password-eye {
+  transform: scale(0.95);
+}

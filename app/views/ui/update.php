@@ -49,8 +49,38 @@
             name="email" 
             value="<?= $user['email'] ?>" 
             placeholder="Enter email address"
-            required`
+            required
           >
+        </div>
+        
+        <div class="form-group">
+          <label for="update-password">Password</label>
+          <div class="password-input-container">
+            <input 
+              type="password" 
+              id="update-password"
+              name="password" 
+              value="<?= isset($user['password']) ? $user['password'] : '' ?>" 
+              placeholder="Enter new password (leave blank to keep current)"
+              minlength="6"
+            >
+            <button type="button" class="password-toggle" onclick="toggleUpdatePassword()" title="Show password">
+              <span id="update-password-eye">🙉</span>
+            </button>
+          </div>
+          <small class="form-help">Leave blank to keep current password</small>
+        </div>
+        
+        <div class="form-group">
+          <label for="update-active">Account Status</label>
+          <select 
+            id="update-active" 
+            name="active" 
+            required
+          >
+            <option value="1" <?= (isset($user['active']) && $user['active'] == 1) ? 'selected' : '' ?>>Active</option>
+            <option value="0" <?= (isset($user['active']) && $user['active'] == 0) ? 'selected' : '' ?>>Inactive</option>
+          </select>
         </div>
         
         <div class="form-actions">
@@ -64,8 +94,24 @@
       </form>
     </div>
   </div>
+
+  <script>
+    // Password visibility toggle functionality
+    function toggleUpdatePassword() {
+      const passwordInput = document.getElementById('update-password');
+      const eyeIcon = document.getElementById('update-password-eye');
+      
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        eyeIcon.innerHTML = '🙈'; // Hide icon
+        eyeIcon.parentElement.title = 'Hide password';
+      } else {
+        passwordInput.type = 'password';
+        eyeIcon.innerHTML = '🙉'; // Show icon
+        eyeIcon.parentElement.title = 'Show password';
+      }
+    }
+  </script>
 </body>
-
-
 
 </html>

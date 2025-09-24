@@ -54,6 +54,33 @@
           >
         </div>
         
+        <div class="form-group">
+          <label for="password" class="form-label">Password</label>
+          <input 
+            type="password" 
+            id="password" 
+            name="password" 
+            class="form-input" 
+            placeholder="Enter password" 
+            required
+            minlength="6"
+          >
+        </div>
+        
+        <div class="form-group">
+          <label for="active" class="form-label">Account Status</label>
+          <select 
+            id="active" 
+            name="active" 
+            class="form-input" 
+            required
+          >
+            <option value="">Select status</option>
+            <option value="1">Active</option>
+            <option value="0">Inactive</option>
+          </select>
+        </div>
+        
         <div class="form-actions">
           <button type="submit" class="btn btn-primary btn-submit">
             Save Accounts

@@ -43,14 +43,25 @@ defined('PREVENT_DIRECT_ACCESS') or exit('No direct script access allowed');
 |
 */
 
-/* $router->get('/', 'Welcome::index'); */
-$router->get('/', 'StudentsController::get_all');
+// default landing page
+$router->get('/', 'Auth::login');
+
 $router->get('/users', 'StudentsController::get_all');
 $router->get('/users/get-all', 'StudentsController::get_all');
 $router->get('/users/get-all/{page}', 'StudentsController::get_all');
+
 $router->get('/users/create', 'StudentsController::create');
 $router->post('/users/create', 'StudentsController::create');
+
 $router->get('/users/update/{id}', 'StudentsController::update');
 $router->post('/users/update/{id}', 'StudentsController::update');
+
 $router->get('/users/delete/{id}', 'StudentsController::delete');
+$router->get('/users/logout', 'StudentsController::logout');
+
+$router->get('auth/login', 'Auth::login');
+$router->post('auth/login', 'Auth::login');
+$router->get('auth/register', 'Auth::register');
+$router->post('auth/register', 'Auth::register');
+$router->get('auth/logout', 'Auth::logout');
 

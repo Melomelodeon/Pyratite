@@ -13,6 +13,12 @@
 #btn-add-user {
   margin-left: auto;
   margin-right: var(--space-md);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.page-header form {
+  flex-shrink: 0;
 }
 
 #search-user {
@@ -23,8 +29,8 @@
   font-size: 0.8rem;
   font-weight: 600;
   box-shadow: var(--shadow-str);
-
   margin-right: var(--space-md);
+  min-width: 200px;
 }
 
 .data-table th {
@@ -81,6 +87,11 @@
   color: var(--accent-two);
   font-family: "SF Mono", Monaco, "Cascadia Code", monospace;
   font-size: 13px;
+}
+
+/* Inactive Email Styling */
+.inactive-email {
+  color: var(--warning) !important;
 }
 
 /* Enhanced Button Styles for Table */
@@ -156,6 +167,21 @@
 
   #btn-add-user {
     margin-left: none;
+    margin-right: 0;
+    margin-bottom: var(--space-sm);
+    width: 100%;
+    justify-content: center;
+  }
+
+  .page-header form {
+    margin-bottom: var(--space-sm);
+    width: 100%;
+  }
+
+  #search-user {
+    width: 100%;
+    margin-right: 0;
+    text-align: center;
   }
 
   .table-actions {
@@ -183,6 +209,19 @@
 
   #btn-add-user {
     margin-left: none;
+    margin-right: 0;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .page-header form {
+    width: 100%;
+  }
+
+  #search-user {
+    width: 100%;
+    margin-right: 0;
+    min-width: unset;
   }
 
   .data-table thead tr {
@@ -316,4 +355,128 @@
   font-size: 14px;
   color: #ffffffff;
   margin-top: var(--space-sm);
+}
+
+/* Floating Logout Container */
+.floating-logout-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  cursor: grab;
+  user-select: none;
+}
+
+.floating-logout-container:active {
+  cursor: grabbing;
+}
+
+/* Floating Logout Button */
+.floating-logout-btn {
+  background: var(--bg-secondary);
+  border: none;
+  color: white;
+  padding: var(--space-md);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size:  1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-str);
+}
+
+.floating-logout-btn:hover {
+  transform: scale(1.1);
+  box-shadow: var(--shadow-str);
+}
+
+/* Logout Popup */
+.logout-popup {
+  position: absolute;
+  bottom: 70px;
+  right: 0;
+  animation: slideInFromBottom 0.3s ease-out;
+}
+
+.popup-content {
+  background: var(--bg-secondary);
+  padding: var(--space-lg);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  width: 280px;
+  text-align: center;
+  border: 1px solid var(--border-primary);
+  position: relative;
+}
+
+.popup-content h3 {
+  color: var(--text-primary);
+  margin-bottom: var(--space-md);
+  font-size: 1.25rem;
+}
+
+.popup-content p {
+  color: var(--text-secondary);
+  margin-bottom: var(--space-lg);
+}
+
+.popup-actions {
+  display: flex;
+  gap: var(--space-md);
+  justify-content: center;
+}
+
+.popup-actions .btn {
+  min-width: 80px;
+  font-size: 0.875rem;
+  padding: var(--space-sm) var(--space-md);
+}
+
+/* Animation for popup */
+@keyframes slideInFromBottom {
+  from {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive adjustments for floating element */
+@media (max-width: 640px) {
+  .floating-logout-container {
+    bottom: 15px;
+    right: 15px;
+  }
+  
+  .floating-logout-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 1.3rem;
+    padding: var(--space-sm);
+  }
+  
+  .logout-popup {
+    bottom: 60px;
+    right: -100px;
+    left: auto;
+  }
+  
+  .popup-content {
+    width: 250px;
+  }
+  
+  .popup-actions {
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+  
+  .popup-actions .btn {
+    width: 100%;
+    min-width: unset;
+  }
 }

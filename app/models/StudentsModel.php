@@ -62,4 +62,11 @@ class StudentsModel extends Model
         return $this->db->raw($sql, $params)->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function find_by_email($email)
+    {
+        $sql = "SELECT * FROM {$this->table} WHERE email = ? AND {$this->soft_delete_column} IS NULL";
+        $result = $this->db->raw($sql, [$email]);
+        return $result ? $result->fetch(PDO::FETCH_ASSOC) : null;
+    }
+
 }

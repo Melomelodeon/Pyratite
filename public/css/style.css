@@ -1,3 +1,20 @@
+/* Inter Variable Font - Local */
+@font-face {
+  font-family: 'Inter';
+  src: url('../fonts/inter/Inter-VariableFont_opsz,wght.ttf') format('truetype');
+  font-weight: 100 900; /* Supports all weights from 100 to 900 */
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('../fonts/inter/Inter-Italic-VariableFont_opsz,wght.ttf') format('truetype');
+  font-weight: 100 900; /* Supports all weights from 100 to 900 */
+  font-style: italic;
+  font-display: swap;
+}
+
 * {
   margin: 0;
   padding: 0;
