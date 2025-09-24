@@ -21,9 +21,15 @@
             <!-- Login Form -->
             <form class="login-form" method="POST" action="<?= base_url() . 'auth/login' ?>">
                 <?php if (isset($error)): ?>
-                    <div class="alert alert-error">
-                        <?= $error ?>
-                    </div>
+                    <?php if (strpos($error, 'inactive') !== false): ?>
+                        <div class="alert alert-warning">
+                            <?= $error ?>
+                        </div>
+                    <?php else: ?>
+                        <div class="alert alert-error">
+                            <?= $error ?>
+                        </div>
+                    <?php endif; ?>
                 <?php endif; ?>
 
                 <?php if (isset($success)): ?>
